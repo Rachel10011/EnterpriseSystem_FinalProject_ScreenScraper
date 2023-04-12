@@ -21,5 +21,9 @@ app.use('/clients', clientsRouter)
 const itemsRouter = require('./routes/itemRoute')
 
 app.use('/items', itemsRouter)
-
+app.use(express.json())
+app.use((req, res) => {
+    // req.body is deserialized body:
+    console.log(req.body);
+  });   
 app.listen(3000, () => console.log('Server Started'))

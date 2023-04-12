@@ -4,32 +4,16 @@ const { Model, model } = require("mongoose");
 const router = express.Router();
 const Item = require("../models/item");
 
-// Get all items
-// router.post("/get-all-items", async (req, res) => {
-//   console.log("trying items")
-
-//     console.log(req.body.email)
-
-//     email = req.params.email
-//     try {
-//       const items = await Item.find({email})({
-//         itemName:1,
-//         originalPrice: 1, 
-//         newPrice:1, 
-//         rating: 1, 
-//         reviewTotal: 1, 
-//         availability: 1, 
-//         url: 1, 
-//         email: 1,
-//         _id:0
-//       });
+//Get all items of the current user
+router.post("/get-all-items", async (req, res) => {
+    try {
+       const items = await item.find({email:req.body.email});
+      res.json(items);
   
-//       res.json(items);
-  
-//     } catch (err) {
-//       res.status(500).json({ message: err.message });
-//     }
-//   });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
 
 
   //test add single item
@@ -57,40 +41,3 @@ const Item = require("../models/item");
 
 
   module.exports = router;
-// //Get all items
-// router.post("/get-all-items", async (req, res) => {
-//     try {
-//       const items = await Item.find(req.body.email).select({
-//         itemName:1,
-//         originalPrice: 1, 
-//           newPrice:1, 
-//           rating: 1, 
-//           reviewTotal: 1, 
-//           availability: 1, 
-//           url: 1, 
-//           email: 1,
-//           _id:0
-//       });
-  
-//       res.json(items);
-  
-//     } catch (err) {
-//       res.status(500).json({ message: err.message });
-//     }
-//   });
-
-//   //input: url, userEmail
-//   router.post("/add-new-items", async (req, res) => {
-//     try {
-//       const items = await Item.findOne(req.body.url);
-  
-//       //send the url string to scraper
-//       res.json(items);
-  
-//     } catch (err) {
-//       res.status(500).json({ message: err.message });
-//     }
-//   });
-
-
-
