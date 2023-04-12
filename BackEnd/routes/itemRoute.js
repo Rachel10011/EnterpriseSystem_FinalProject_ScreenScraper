@@ -5,9 +5,10 @@ const router = express.Router();
 const Item = require("../models/item");
 
 //Get all items of the current user
-router.post("/get-all-items", async (req, res) => {
+router.get("/get-all-items", async (req, res) => {
+  const email = req.query.email
     try {
-       const items = await Item.find({email:req.body.email});
+       const items = await Item.find({email:email});
       res.json(items);
   
     } catch (err) {
@@ -21,7 +22,8 @@ router.delete("/delete-item", async (req, res) => {
      const deleteItem = await Item.findOne(
       {
         email:req.body.email,
-        url: req.body.url
+        url: req.body.url,
+        itemName:req.body.itemName
     });
 
     if(deleteItem==null)
