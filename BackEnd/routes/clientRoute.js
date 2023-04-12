@@ -32,6 +32,23 @@ router.post("/register", async (req, res) => {
 
 });
 
+router.post("/login", async (req, res) => {
+  const client = await Client.findOne({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  if (client != null) {
+    console.log("User exists");
+    const email = { email: client.email };
+
+    res.status(201).json(email.email + " has successfully logged in");
+   
+  } else {
+    console.log("User does not exist");
+    res.status(401).json("Email or password is incorrect, please try again");
+  }
+});
+
 
 module.exports = router;
 
