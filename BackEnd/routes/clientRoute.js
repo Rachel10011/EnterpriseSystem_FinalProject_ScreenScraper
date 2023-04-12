@@ -37,6 +37,17 @@ router.post("/login", async (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
+
+  //was tryin query params wasn't workin
+//   tried router.get("/login/:email:password") and ("/login/email/:email/password/:password")
+    // console.log(req.params)
+
+    // const client = await Client.findOne({
+    //     email: req.params.email,
+    //     password: req.params.password
+    // })
+
+
   if (client != null) {
     console.log("User exists");
     const email = { email: client.email };
