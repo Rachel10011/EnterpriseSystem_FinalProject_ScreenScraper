@@ -7,7 +7,7 @@ const Item = require("../models/item");
 //Get all items of the current user
 router.post("/get-all-items", async (req, res) => {
     try {
-       const items = await item.find({email:req.body.email});
+       const items = await Item.find({email:req.body.email});
       res.json(items);
   
     } catch (err) {
@@ -15,6 +15,26 @@ router.post("/get-all-items", async (req, res) => {
     }
   });
 
+  //Delete selected item of the current user
+router.delete("/delete-item", async (req, res) => {
+  try {
+     const deleteItem = await Item.findOne(
+      {
+        email:req.body.email,
+        url: req.body.url
+    });
+
+    if(deleteItem==null)
+    {
+      return res.status(404).json({ message: "Cannot find item" });
+    }
+    await deleteItem.remove();
+    res.json({ message: "Item Deleted" });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
   //test add single item
   router.post("/", async (req, res) => {
