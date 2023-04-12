@@ -100,5 +100,38 @@ router.post("/get-all-items", async (req, res) => {
     // }
   });
 
+  router.patch("/UpdatePrice", async (req, res) => {
+
+
+    
+     scraperURL = "http://127.0.0.1:5000/scrape";
+     const scraperResponse = await axios.post(scraperURL, {
+       URL: req.body.url,
+     });
+
+     let item = await Item.findOne({url: req.body.url})
+     oldPrice = item.newPrice
+
+     scraperResponse.data.Price = 37.90
+     if(item.newPrice > scraperResponse.data.Price) {
+      item.newPrice = scraperResponse.data.Price;
+
+      try {
+        await item.save();
+        console.log("added");
+
+        res.status(201).json("A lower price was found! This item is currently $" + item.newPrice + " on Amazon, down from $" + oldPrice);
+      } catch (err) {
+        res.status(400).json({ message: err.message });
+      } 
+     }
+     else {
+      res.status(201).json("There is currently not a lower price");
+     }
+
+
+  });
+
+
 
   module.exports = router;
