@@ -18,8 +18,8 @@ const clientsRouter = require('./routes/clientRoute')
 
 app.use('/clients', clientsRouter)
 
-// const itemsRouter = require('./routes/itemRoute')
+const itemsRouter = require('./routes/itemRoute')
 
-// app.use('/items', itemsRouter)
+app.use('/items', itemsRouter)
 
 app.listen(3000, () => console.log('Server Started'))
