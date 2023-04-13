@@ -49,8 +49,8 @@ def sendEmail(item):
 
     url = item['url']
     newPrice = item['newPrice']
-    name: item['itemName']
-    oldPrice: item['originalPrice']
+    name = item['itemName']
+    oldPrice = item['originalPrice']
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "DISCOUNTS CHECK"
@@ -61,10 +61,11 @@ def sendEmail(item):
     text = """\
     SALE:
     Check out the big discount on your added item.
-    Items: {sendName}: {sendurl}
+    Items: {sendName}
+    URL: {sendurl}
     Current Price: {sendNewPrice}
     Original Price: {sendOldPrice}
-    """  # .format(sendName=name, sendurl=url, sendNewPrice=newPrice, sendOldPrice=oldPrice)
+    """   .format(sendName=name, sendurl=url, sendNewPrice=newPrice, sendOldPrice=oldPrice)
 
     html = """\
     <html>
@@ -73,13 +74,14 @@ def sendEmail(item):
                 Check out the big discount on your added item.<br>
         </p>
         <div> 
-            Items: "{name}": "{url}"<br>
-            Current Price: "{newPrice}"<br>
-            Original Price: "{newPrice}"<br>
+            Items: "{sendName}": "{sendurl}"<br>
+            URL: "{sendurl}"<br>
+            Current Price: "{sendNewPrice}"<br>
+            Original Price: "{sendOldPrice}"<br>
         </div>
         </body>
     </html>
-    """  # .format(sendName=name, sendurl=url, sendNewPrice=newPrice, sendOldPrice=newPrice)
+    """   .format(sendName=name, sendurl=url, sendNewPrice=newPrice, sendOldPrice=oldPrice)
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(text, "plain")
