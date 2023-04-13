@@ -1,0 +1,31 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+beautifulsoup4
+# ca-certificates
+certifi
+charset-normalizer
+click
+colorama
+docopt
+flask
+idna
+importlib-metadata
+itsdangerous
+jinja2
+lxml
+markupsafe
+# openssl
+requests
+setuptools
+soupsieve
+# sqlite
+tzdata
+urllib3
+vc
+# vs2015_runtime
+werkzeug
+wheel
+wincertstore
+yarg
+zipp
