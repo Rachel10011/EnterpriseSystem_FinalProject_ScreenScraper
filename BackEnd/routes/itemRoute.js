@@ -4,107 +4,63 @@ const router = express.Router();
 const Item = require("../models/item");
 const axios = require("axios");
 
-// Get all items
-router.post("/get-all-items", async (req, res) => {
-  console.log("trying items")
-
-    // console.log(req.body.email)
-
-    // email = req.params.email
-    try {
-      const items = await Item.find(req.body.email).select({
-        itemName:1,
-        originalPrice: 1, 
-        newPrice:1, 
-        rating: 1, 
-        reviewTotal: 1, 
-        availability: 1, 
-        url: 1, 
-        email: 1,
-        _id:0
-      });
-  
-      res.json(items);
-  
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
 
 
   //Add new item
   router.post("/AddItem", async (req, res) => {
 
-    const addDetails = {email: req.body.email, url: req.body.url}
-    // console.log(addDetails.email, addDetails.url)
+    // Check if the item requested is already being tracked by the user, else send the url to the scraper
+    const checkIfURLExists = await Item.findOne({ url: req.body.url })
 
-    //call scraper
-    scraperURL = "http://127.0.0.1:5000/scrape"
-    const scraperResponse = await axios.post(scraperURL, {
-      URL: req.body.url
-    })
-   
-    console.log("tried callin scraper")
-    console.log({scraperResponse})
-
-    if(scraperResponse.data) {
-      console.log("works")
-      console.log(typeof scraperResponse.data.Price);
-      scraperResponse.data.Price = Number(scraperResponse.data.Price.slice(1))
-      console.log(typeof scraperResponse.data.Price);
-
-      const item = new Item({
-        itemName: scraperResponse.data.Name,
-        originalPrice: scraperResponse.data.Price,
-        newPrice: scraperResponse.data.Price,
-        rating: scraperResponse.data.Rating,
-        reviewTotal: scraperResponse.data.ReviewCount,
-        availability: scraperResponse.data.Availability,
-        url: req.body.url,
-        email: req.body.email,
-      });
-
-      try {
-        const newItem = await item.save()
-        console.log("added");
-
-        res.status(201).json(newItem)
-      } catch (err) {
-        console.log("not added")
-        res.status(400).json({ message: err.message })
-      } 
-
+    if(checkIfURLExists && checkIfURLExists.email == req.body.email) {
+      res.status(201).json("This item is already being tracked");
     }
     else {
-      console.log("noo")
-      res.status(400).json("The item could not be scraped")
+
+      //Call scraper
+       scraperURL = "http://127.0.0.1:5000/scrape";
+
+       const scraperResponse = await axios.post(scraperURL, {
+         URL: req.body.url,
+       });
+
+       if (scraperResponse.data) {
+
+         // Remove the '$' and convert it to a Number type
+         scraperResponse.data.Price = Number(
+           scraperResponse.data.Price.slice(1)
+         );
+
+         const item = new Item({
+           itemName: scraperResponse.data.Name,
+           originalPrice: scraperResponse.data.Price,
+           newPrice: scraperResponse.data.Price,
+           rating: scraperResponse.data.Rating,
+           reviewTotal: scraperResponse.data.ReviewCount,
+           availability: scraperResponse.data.Availability,
+           url: req.body.url,
+           email: req.body.email,
+         });
+
+         try {
+           const newItem = await item.save();
+
+           res.status(201).json(newItem);
+         } catch (err) {
+           res.status(400).json({ message: err.message });
+         }
+       } else {
+         res.status(400).json("The item could not be scraped");
+       }
     }
 
-    // const item = new Item({
-    //   itemName: req.body.itemName,
-    //   originalPrice: req.body.originalPrice,
-    //   newPrice: req.body.originalPrice,
-    //   rating: req.body.rating,
-    //   reviewTotal: req.body.reviewTotal,
-    //   availability: req.body.availability,
-    //   url: req.body.url,
-    //   email: req.body.email
-    // })
-
-    // try {
-    //   const newItem = await item.save()
-    //   res.status(201).json(newItem)
-    // }
-    // catch(err) {
-    //   res.status(400).json({message: err.message})
-    // }
   });
 
+  // Manual price check
   router.patch("/UpdatePrice", async (req, res) => {
 
+     scraperURL = "http://127.0.0.1:5000/scrape"
 
-    
-     scraperURL = "http://127.0.0.1:5000/scrape";
      const scraperResponse = await axios.post(scraperURL, {
        URL: req.body.url,
      });
@@ -112,26 +68,27 @@ router.post("/get-all-items", async (req, res) => {
      let item = await Item.findOne({url: req.body.url})
      oldPrice = item.newPrice
 
-     scraperResponse.data.Price = 37.90
+    //Hard coded test
+    scraperResponse.data.Price = 88.99
+
      if(item.newPrice > scraperResponse.data.Price) {
-      item.newPrice = scraperResponse.data.Price;
+      item.newPrice = scraperResponse.data.Price
 
       try {
-        await item.save();
-        console.log("added");
+        await item.save()
 
-        res.status(201).json("A lower price was found! This item is currently $" + item.newPrice + " on Amazon, down from $" + oldPrice);
+        res.status(201).json("A lower price was found! This item is currently $" 
+        + item.newPrice 
+        + " on Amazon, down from $" + oldPrice)
+
       } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json({ message: err.message })
       } 
      }
      else {
-      res.status(201).json("There is currently not a lower price");
+      res.status(201).json("There is currently not a lower price")
      }
-
-
-  });
-
+  })
 
 
   module.exports = router;
