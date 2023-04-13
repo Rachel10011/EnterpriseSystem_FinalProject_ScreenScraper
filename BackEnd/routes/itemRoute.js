@@ -69,7 +69,7 @@ const axios = require("axios");
      oldPrice = item.newPrice
 
     //Hard coded test
-    scraperResponse.data.Price = 88.99
+    // scraperResponse.data.Price = 88.98
 
      if(item.newPrice > scraperResponse.data.Price) {
       item.newPrice = scraperResponse.data.Price
