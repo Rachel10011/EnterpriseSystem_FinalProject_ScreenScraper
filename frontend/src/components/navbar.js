@@ -1,4 +1,3 @@
-import LoginState from "./login-state";
 
 export default function Navbar() {
   return (
@@ -12,7 +11,7 @@ export default function Navbar() {
           </a>
           <div class="flex items-center">
             {/* put login stuff here */}
-            <LoginState />
+            Login
           </div>
         </div>
       </nav>
