@@ -102,64 +102,21 @@ def sendEmail(item):
 
 
 if __name__ == "__main__":
-    # while True:
-    dbname = get_database()
-    items = dbname.items
-    for item in items.find():
-        newPrice = check(item)
-        if newPrice != 0:
-            print('========Email')
-            # add function call for sending emails here
-            sendEmail(item)
+    while True:
+        dbname = get_database()
+        items = dbname.items
+        for item in items.find():
+            newPrice = check(item)
+            if newPrice != 0:
+                print('========Email')
+                # add function call for sending emails here
+                sendEmail(item)
 
-            print('Add and Email')
-            item['newPrice'] = newPrice
-            items.update_one({'_id': item['_id']}, {
-                             "$set": item}, upsert=False)
+                print('Add and Email')
+                item['newPrice'] = newPrice
+                items.update_one({'_id': item['_id']}, {
+                                "$set": item}, upsert=False)
 
-        else:
-            print('No Change')
-    # time.sleep(21600)
-
-
-# def sendEmail(item):
-#     sender_email = "gooddeals8998@gmail.com"
-#     receiver_email = "letra1712@gmail.com"
-#     password = "ikovsnbkhaufjjpf"
-
-#     message = MIMEMultipart("alternative")
-#     message["Subject"] = "DISCOUNTS CHECK"
-#     message["From"] = sender_email
-#     message["To"] = receiver_email
-
-#     # Create the plain-text and HTML version of your message
-#     text = """\
-#   SALE:
-#   Check out the big discount on your added item."""
-#     html = """\
-#   <html>
-#     <body>
-#       <p>SALE:<br>
-#         Check out the big discount on your added item.<br>
-#         <a href="http://www.google.com">Item</a>
-#       </p>
-#     </body>
-#   </html>
-#   """
-
-#     # Turn these into plain/html MIMEText objects
-#     part1 = MIMEText(text, "plain")
-#     part2 = MIMEText(html, "html")
-
-#     # Add HTML/plain-text parts to MIMEMultipart message
-#     # The email client will try to render the last part first
-#     message.attach(part1)
-#     message.attach(part2)
-
-#     # Create secure connection with server and send email
-#     context = ssl.create_default_context()
-#     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-#         server.login(sender_email, password)
-#         server.sendmail(
-#             sender_email, receiver_email, message.as_string()
-#         )
+            else:
+                print('No Change')
+    time.sleep(21600)

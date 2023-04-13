@@ -39,27 +39,27 @@ router.delete("/delete-item", async (req, res) => {
 });
 
   //test add single item
-  router.post("/", async (req, res) => {
-    console.log("here")
-    const item = new Item({
-      itemName: req.body.itemName,
-      originalPrice: req.body.originalPrice,
-      newPrice: req.body.originalPrice,
-      rating: req.body.rating,
-      reviewTotal: req.body.reviewTotal,
-      availability: req.body.availability,
-      url: req.body.url,
-      email: req.body.email
-    })
+  // router.post("/", async (req, res) => {
+  //   console.log("here")
+  //   const item = new Item({
+  //     itemName: req.body.itemName,
+  //     originalPrice: req.body.originalPrice,
+  //     newPrice: req.body.originalPrice,
+  //     rating: req.body.rating,
+  //     reviewTotal: req.body.reviewTotal,
+  //     availability: req.body.availability,
+  //     url: req.body.url,
+  //     email: req.body.email
+  //   })
 
-    try {
-      const newItem = await item.save()
-      res.status(201).json(newItem)
-    }
-    catch(err) {
-      res.status(400).json({message: err.message})
-    }
-  });
+  //   try {
+  //     const newItem = await item.save()
+  //     res.status(201).json(newItem)
+  //   }
+  //   catch(err) {
+  //     res.status(400).json({message: err.message})
+  //   }
+  // });
 
 
   module.exports = router;
