@@ -1,3 +1,5 @@
+import LoginState from "./login-state";
+
 export default function Navbar() {
   return (
     <div>
@@ -10,12 +12,7 @@ export default function Navbar() {
           </a>
           <div class="flex items-center">
             {/* put login stuff here */}
-            <a
-              href="#"
-              class="text-m  text-blue-600 dark:text-blue-500 hover:underline"
-            >
-              Login
-            </a>
+            <LoginState />
           </div>
         </div>
       </nav>
