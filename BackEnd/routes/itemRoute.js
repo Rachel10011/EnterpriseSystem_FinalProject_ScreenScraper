@@ -5,6 +5,39 @@ const Item = require("../models/item");
 const axios = require("axios");
 
 
+//Get all items of the current user
+router.get("/get-all-items", async (req, res) => {
+  const email = req.query.email
+    try {
+       const items = await Item.find({email:email});
+      res.json(items);
+  
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+  //Delete selected item of the current user
+router.delete("/delete-item", async (req, res) => {
+  try {
+     const deleteItem = await Item.findOne(
+      {
+        email:req.body.email,
+        url: req.body.url,
+        itemName:req.body.itemName
+    });
+
+    if(deleteItem==null)
+    {
+      return res.status(404).json({ message: "Cannot find item" });
+    }
+    await deleteItem.remove();
+    res.json({ message: "Item Deleted" });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
   //Add new item
   router.post("/AddItem", async (req, res) => {
