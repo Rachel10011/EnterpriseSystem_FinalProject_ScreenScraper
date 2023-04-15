@@ -1,3 +1,3 @@
-dbURL = "mongodb+srv://scraper:newpassword@cluster0.6bx67x8.mongodb.net/Cluster0?retryWrites=true&w=majority"
+dbURL = "mongodb://127.0.0.1:27017/test"
 email = "gooddeals8998@gmail.com"
 emailPW = "ikovsnbkhaufjjpf"

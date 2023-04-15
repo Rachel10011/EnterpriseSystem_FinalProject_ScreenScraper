@@ -23,8 +23,7 @@ router.delete("/delete-item", async (req, res) => {
      const deleteItem = await Item.findOne(
       {
         email:req.body.email,
-        url: req.body.url,
-        itemName:req.body.itemName
+        url: req.body.url
     });
 
     if(deleteItem==null)
