@@ -136,8 +136,17 @@ const ViewAll = () => {
                         {item.email}
                       </td>
                       <td scope="row" className="px-6 py-4">
-                        Edit |{" "}
-                        <button className="blue" onClick={() => this.DeleteItem(userEmail, item)}>
+                        <button
+                          className="blue"
+                          onClick={() => UpdateItem(item)}
+                        >
+                          Check Price
+                        </button>
+                        
+                        <button
+                          className="blue"
+                          onClick={() => DeleteItem(userEmail, item)}
+                        >
                           Delete
                         </button>
                       </td>
@@ -186,8 +195,20 @@ function DeleteItem(userEmail, item) {
       console.log(error);
     });
 }
-// email:req.body.email,
-// url: req.body.url,
-// itemName:req.body.itemName
+
+function UpdateItem(item) {
+  console.log(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`);
+  axios
+    .patch(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`, {
+      url: item.url,
+    })
+    .then(function (response) {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 export default ViewAll;
