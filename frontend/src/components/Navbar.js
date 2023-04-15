@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { SessionToggle } from "./SessionToggle";
 
 export const Navbar = () => {
+  const [userEmail, setUserEmail] = useSession();
+
   return (
     <div>
       <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -15,8 +18,7 @@ export const Navbar = () => {
           </Link>
 
           <div class="flex items-center">
-            {/* put login stuff here */}
-            Login
+            <SessionToggle userEmail = {this.userEmail}/>
           </div>
         </div>
       </nav>

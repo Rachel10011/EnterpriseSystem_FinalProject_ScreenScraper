@@ -3,8 +3,10 @@ import "./App.css";
 import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
 import ViewAll from "./pages/ViewAll";
+import AddItem from "./pages/AddItem"; 
 import { Navbar } from "./components/Navbar";
 function App() {
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -17,7 +19,7 @@ function App() {
 
         {/* Standard routes */}
         <Route path="/view-all" element={<ViewAll />} />
-        {/* <Route path="/add-item" element={<AddItem />} /> */}
+        <Route path="/add-item" element={<AddItem />} />
       </Routes>
     </BrowserRouter>
   );

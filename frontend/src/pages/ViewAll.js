@@ -1,23 +1,44 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ViewAll = () => {
+  const [userEmail, setUserEmail] = useSession();
+  
   const [itemList, setItems] = useState(null);
   useEffect(() => {
     getItems();
   });
 
   const getItems = () => {
-    fetch(`${process.env.BACKEND_DB}/items`)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setItems(result);
-        },
-        (error) => {
-          setItems(null);
-        }
-      );
+    axios.get(`${process.env.BACKEND_DB}/items/get-all-items`, {
+      params: {
+        email: userEmail
+      }
+    }).then((res) => {
+      const result = res.data.results.map((obj) => ({
+        itemName: obj.itemName,
+        originalPrice: obj.originalPrice,
+        newPrice: obj.newPrice,
+        rating: obj.rating,
+        reviewTotal: obj.reviewTotal,
+        availability: obj.availability,
+        url: obj.url,
+        email: obj.email,
+      }));
+      setItems(result);
+    });
+
+    // fetch(`${process.env.BACKEND_DB}/items/get-all-items`)
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       setItems(result);
+    //     },
+    //     (error) => {
+    //       setItems(null);
+    //     }
+    //   );
   };
   return (
     <div>
@@ -130,4 +151,4 @@ const ViewAll = () => {
   );
 };
 
-export default ViewAll
+export default ViewAll;

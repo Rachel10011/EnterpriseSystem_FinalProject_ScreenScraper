@@ -9,4 +9,4 @@ const AddItem = () => {
   );
 };
 
-export default CreateAccount;
+export default AddItem;

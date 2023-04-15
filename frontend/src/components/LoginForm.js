@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 export const LoginForm = () => {
   const schema = yup.object().shape({
@@ -24,6 +25,10 @@ export const LoginForm = () => {
         password: data.password,
       })
       .then(function (response) {
+        useEffect(() => {
+          localStorage.setItem("email", JSON.stringify(data.email));
+        }, [email]);
+
         window.location.href = "/view-all";
         console.log(response);
       })

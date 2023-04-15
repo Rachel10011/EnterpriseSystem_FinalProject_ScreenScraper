@@ -1,12 +1,15 @@
 import React from "react";
-import { useState } from "react";
-import axios from "axios";
+import { redirect } from "react-router-dom";
+
 import { LoginForm } from "../components/LoginForm";
+import { useSession } from "../components/userSession";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userEmail, setUserEmail] = useSession();
 
+  if (userEmail) {
+    return redirect("/view-all");
+  }
   return (
     <div>
       <h1>Login</h1>
@@ -23,18 +26,18 @@ const Login = () => {
   );
 };
 
-function loginUser(email, password) {
-  axios
-    .post("http://localhost:3001/items/register", {
-      email: email,
-      password: password,
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
+// function loginUser(email, password) {
+//   axios
+//     .post("http://localhost:3001/clients/login", {
+//       email: email,
+//       password: password,
+//     })
+//     .then(function (response) {
+//       console.log(response);
+//     })
+//     .catch(function (error) {
+//       console.log(error);
+//     });
+// }
 
 export default Login;
