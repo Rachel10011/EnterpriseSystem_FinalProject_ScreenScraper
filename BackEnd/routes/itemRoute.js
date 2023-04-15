@@ -94,16 +94,23 @@ router.delete("/delete-item", async (req, res) => {
      scraperURL = "http://127.0.0.1:5000/scrape"
 
      const scraperResponse = await axios.post(scraperURL, {
-       URL: req.body.url,
+       URL: req.body.url
      });
 
-     let item = await Item.findOne({url: req.body.url})
+     let item = await Item.findOne({
+       email: req.body.email,
+       url: req.body.url
+     });
      oldPrice = item.newPrice
 
     //Hard coded test
     // scraperResponse.data.Price = 88.98
 
-     if(item.newPrice > scraperResponse.data.Price) {
+
+       scraperResponse.data.Price = Number(
+           scraperResponse.data.Price.slice(1))
+
+     if(item.newPrice != scraperResponse.data.Price) {
       item.newPrice = scraperResponse.data.Price
 
       try {

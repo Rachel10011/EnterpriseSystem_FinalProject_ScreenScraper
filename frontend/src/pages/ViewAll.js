@@ -20,21 +20,21 @@ const ViewAll = () => {
   console.log(itemList);
 
   const getItems = () => {
-    // axios
-    //   .get(`${process.env.REACT_APP_BACKEND_DB}/items/get-all-items?email=${userEmail}`)
-    //   .then((res) => {
-    //     const result = res.data.results.map((obj) => ({
-    //       itemName: obj.itemName,
-    //       originalPrice: obj.originalPrice,
-    //       newPrice: obj.newPrice,
-    //       rating: obj.rating,
-    //       reviewTotal: obj.reviewTotal,
-    //       availability: obj.availability,
-    //       url: obj.url,
-    //       email: obj.email,
-    //     }));
-    //     setItems(result);
-    //   });
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_DB}/items/get-all-items?email=${userEmail}`)
+      .then((res) => {
+        const result = res.data.results.map((obj) => ({
+          itemName: obj.itemName,
+          originalPrice: obj.originalPrice,
+          newPrice: obj.newPrice,
+          rating: obj.rating,
+          reviewTotal: obj.reviewTotal,
+          availability: obj.availability,
+          url: obj.url,
+          email: obj.email,
+        }));
+        setItems(result);
+      });
 
     console.log(itemList);
     fetch(
@@ -138,11 +138,11 @@ const ViewAll = () => {
                       <td scope="row" className="px-6 py-4">
                         <button
                           className="blue"
-                          onClick={() => UpdateItem(item)}
+                          onClick={() => UpdateItem(userEmail, item)}
                         >
-                          Check Price
+                          Check for item update
                         </button>
-                        
+
                         <button
                           className="blue"
                           onClick={() => DeleteItem(userEmail, item)}
@@ -196,11 +196,12 @@ function DeleteItem(userEmail, item) {
     });
 }
 
-function UpdateItem(item) {
+function UpdateItem(userEmail, item) {
   console.log(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`);
   axios
     .patch(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`, {
-      url: item.url,
+      email: userEmail,
+      url: item.url
     })
     .then(function (response) {
       console.log(response);
