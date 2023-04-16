@@ -11,10 +11,10 @@ export const SessionToggle = () => {
   const [userEmail, setUserEmail] = useLocalStorage("email", "");
 
   if (!userEmail) {
-    return <a href="/authentication/login">Login</a>;
+    return <a class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white" href="/authentication/login">Login</a>;
   }  
   return (
-    <div>
+    <div class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
       <p>{userEmail}</p>
       <button onClick={() => {Logout()}}>Logout</button>
     </div>

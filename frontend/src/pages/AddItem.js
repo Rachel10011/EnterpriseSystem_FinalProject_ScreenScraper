@@ -3,7 +3,7 @@ import { AddItemForm } from "../components/AddItemForm";
 
 const AddItem = () => {
   return (
-    <div className="">
+    <div class="">
       <AddItemForm />
     </div>
   );
