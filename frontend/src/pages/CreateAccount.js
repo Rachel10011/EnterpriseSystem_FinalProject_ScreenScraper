@@ -3,7 +3,7 @@ import { CreateAccountForm } from "../components/CreateAccountForm";
 
 const CreateAccount = () => {
   return (
-    <div class="">
+    <div>
       <CreateAccountForm />
     </div>
   );
