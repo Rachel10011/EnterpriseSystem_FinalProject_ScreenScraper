@@ -90,7 +90,6 @@ router.delete("/delete-item", async (req, res) => {
 
   // Manual price check
   router.patch("/UpdatePrice", async (req, res) => {
-    console.log("update price");
      scraperURL = "http://127.0.0.1:5000/scrape"
 
      const scraperResponse = await axios.post(scraperURL, {

@@ -5,7 +5,6 @@ import { useLocalStorage } from "../components/localStorage";
 
 const Login = () => {
   const [userEmail, setUserEmail] = useLocalStorage("email", "");
-  console.log(userEmail);
   
 
   return (
@@ -23,19 +22,5 @@ const Login = () => {
     </div>
   );
 };
-
-// function loginUser(email, password) {
-//   axios
-//     .post("http://localhost:3001/clients/login", {
-//       email: email,
-//       password: password,
-//     })
-//     .then(function (response) {
-//       console.log(response);
-//     })
-//     .catch(function (error) {
-//       console.log(error);
-//     });
-// }
 
 export default Login;

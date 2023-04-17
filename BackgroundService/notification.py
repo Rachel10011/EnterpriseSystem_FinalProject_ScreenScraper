@@ -27,18 +27,15 @@ def check(item):
     post_response_json = post_response.json()
     temp = post_response_json['Price']
     price = float(temp[1:])
-    # print('Original Price is: ' + "%.2f" % float(item['originalPrice']))
-    # print('Scraper Price is: ' + "%.2f" % price)
 
     if float(item['originalPrice']) > price and float(item['newPrice']) != price:
-        # print('Update Db and send Email')
-        # print('Price is lower but db isnt updated and email not sent yet')
+
         return price
     elif float(item['originalPrice']) > price and float(item['newPrice']) == price:
-        # print('Already Updateed Db and sent Email')
+        
         return 0
     else:
-        # print('No Change')
+        
         return 0
 
 
@@ -108,7 +105,6 @@ if __name__ == "__main__":
         for item in items.find():
             newPrice = check(item)
             if newPrice != 0:
-                print('========Email')
                 # add function call for sending emails here
                 sendEmail(item)
 

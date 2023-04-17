@@ -40,7 +40,7 @@ def scrape(URL):
  
     # saving the Name in the dict
     product["Name"] = title_string
-    #print("Product Name = ", product["Name"])
+    
  
    # Retreivng Price
     try:
@@ -59,7 +59,7 @@ def scrape(URL):
  
     # saving price to dict
     product["Price"] = price
-    #print("Products price = ", price)
+    
  
     # retrieving product rating
     try:
@@ -75,7 +75,7 @@ def scrape(URL):
  
     # Saving ratings to dict
     product["Rating"] = rating
-    #print("Overall rating = ", rating)
+    
  
     try:
         review_count = soup.find(
@@ -86,9 +86,9 @@ def scrape(URL):
 
     # Save ReviewCount to dict
     product["ReviewCount"] = review_count
-    #print("Total reviews = ", review_count)
+    
 
-    # print availablility status
+
     try:
         available = soup.find("div", attrs={'id': 'availability'})
         available = available.find("span").string.strip().replace(',', '')
@@ -98,7 +98,7 @@ def scrape(URL):
  
     # Saving the availability
     product["Availability"] = available
-    #print("Availability = ", available)
+    
  
     # Return the product as a JSON object
     return json.dumps(product)

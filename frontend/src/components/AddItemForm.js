@@ -19,8 +19,6 @@ export const AddItemForm = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log(userEmail);
-  console.log(`${process.env.REACT_APP_BACKEND_DB}/items/AddItem`);
   const onSubmit = (data) => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB}/items/AddItem`, {
@@ -28,7 +26,6 @@ export const AddItemForm = () => {
         email: userEmail,
       })
       .then(function (response) {
-        console.log(response);
         window.location.href = "/view-all";
       })
       .catch(function (error) {

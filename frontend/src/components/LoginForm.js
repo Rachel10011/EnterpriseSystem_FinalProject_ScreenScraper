@@ -21,7 +21,6 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(`${process.env.REACT_APP_BACKEND_DB}/clients/login`);
     axios
       .post(`${process.env.REACT_APP_BACKEND_DB}/clients/login`, {
         email: data.email,
@@ -29,7 +28,6 @@ export const LoginForm = () => {
       })
       .then(function (response) {
         localStorage.setItem("email", data.email);
-        console.log(response);
         window.location.href = "/view-all";
       })
       .catch(function (error) {

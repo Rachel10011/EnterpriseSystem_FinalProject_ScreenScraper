@@ -21,6 +21,14 @@ def get_product_details():
     if (content_type == 'application/json'):
         body = request.json
         results = scraper.scrape(body["URL"])
+        # Just incase Amazon blocks you from scraping you can use this 1 items
+        # results = {
+        # "Name": "Kingston 480GB A400 SATA 3 2.5 inch Internal SSD SA400S37/480G - HDD Replacement for Increase Performance",
+        # "Price": "$37.00",
+        # "Rating": "4.7 out of 5 stars",
+        # "ReviewCount": "181441 ratings",
+        # "Availability": "In Stock"
+        # }  
         return results
     else:
         return 'Content-Type not supported!'

@@ -5,9 +5,7 @@ import { useLocalStorage } from "../components/localStorage";
 import { redirect } from "react-router-dom";
 
 const ViewAll = () => {
-  console.log("userEmail");
   const [userEmail, setUserEmail] = useLocalStorage("email", "");
-  console.log(userEmail);
   if (!userEmail) {
     redirect("/authentication/login");
   }
@@ -17,28 +15,8 @@ const ViewAll = () => {
     getItems();
   });
 
-  console.log(itemList);
 
   const getItems = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_DB}/items/get-all-items?email=${userEmail}`
-      )
-      .then((res) => {
-        const result = res.data.results.map((obj) => ({
-          itemName: obj.itemName,
-          originalPrice: obj.originalPrice,
-          newPrice: obj.newPrice,
-          rating: obj.rating,
-          reviewTotal: obj.reviewTotal,
-          availability: obj.availability,
-          url: obj.url,
-          email: obj.email,
-        }));
-        setItems(result);
-      });
-
-    console.log(itemList);
     fetch(
       `${process.env.REACT_APP_BACKEND_DB}/items/get-all-items?email=${userEmail}`
     )
@@ -50,8 +28,9 @@ const ViewAll = () => {
         (error) => {
           setItems(null);
         }
-      );
+     );
   };
+  
   if (!itemList) {
     return <div>no Items</div>;
   }
@@ -155,22 +134,6 @@ const ViewAll = () => {
                   ))}
                 </tbody>
               )
-              // || (
-              //   // empty version if there is nothing...
-              //   <tbody>
-              //     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //       <td scope="row" className="px-6 py-4"></td>
-              //     </tr>
-              //   </tbody>
-              // )
             }
           </table>
         </div>
@@ -180,7 +143,6 @@ const ViewAll = () => {
 };
 
 function DeleteItem(userEmail, item) {
-  console.log(`${process.env.REACT_APP_BACKEND_DB}/items/delete-item`);
   axios
     .delete(`${process.env.REACT_APP_BACKEND_DB}/items/delete-item`, {
       data: {
@@ -189,7 +151,6 @@ function DeleteItem(userEmail, item) {
       },
     })
     .then(function (response) {
-      console.log(response);
       window.location.reload();
     })
     .catch(function (error) {
@@ -198,14 +159,12 @@ function DeleteItem(userEmail, item) {
 }
 
 function UpdateItem(userEmail, item) {
-  console.log(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`);
   axios
     .patch(`${process.env.REACT_APP_BACKEND_DB}/items/UpdatePrice`, {
       email: userEmail,
       url: item.url,
     })
     .then(function (response) {
-      console.log(response);
       window.location.reload();
     })
     .catch(function (error) {
