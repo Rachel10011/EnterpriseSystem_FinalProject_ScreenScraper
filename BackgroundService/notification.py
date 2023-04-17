@@ -16,7 +16,7 @@ def get_database():
 
     client = MongoClient(CONNECTION_STRING)
 
-    return client['test']
+    return client['Scraper']
 
 
 def check(item):
@@ -102,7 +102,7 @@ def sendEmail(item):
 
 
 if __name__ == "__main__":
-    # while True:
+    while True:
         dbname = get_database()
         items = dbname.items
         for item in items.find():
@@ -119,4 +119,4 @@ if __name__ == "__main__":
 
             else:
                 print('No Change')
-    # time.sleep(2000)
+    time.sleep(21600)

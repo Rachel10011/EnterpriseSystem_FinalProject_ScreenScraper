@@ -7,9 +7,7 @@ const Login = () => {
   const [userEmail, setUserEmail] = useLocalStorage("email", "");
   console.log(userEmail);
   
-  if (userEmail) {
-    return redirect("/view-all");
-  }
+
   return (
     <div>
       <h1>Login</h1>

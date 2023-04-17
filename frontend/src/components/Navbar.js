@@ -6,14 +6,10 @@ export const Navbar = () => {
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-          <Link
-            className="flex items-center"
-            onClick={() => (window.location.href = "/")}
-          >
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Amazon Scraper
             </span>
-          </Link>
 
           <div className="flex items-right">
             <SessionToggle />
